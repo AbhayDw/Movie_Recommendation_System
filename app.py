@@ -64,14 +64,21 @@ def fetch_movie_details(movie_name):
 
 def display_movie_card(title, details, unique_key, similarity=None, explanation=None):
     if details == "network_error":
-        st.error("Network error: Could not load details.")
-        st.image("https://via.placeholder.com/300x450?text=No+Internet", use_container_width=True)
+        st.error("Network Error")
+        st.warning("Poster Not Available")
         year, rating, plot = 'N/A', 'N/A', 'No plot available due to network error.'
     else:
-        if details and details.get('poster') and details['poster'] != "N/A":
-            st.image(details['poster'], use_container_width=True)
+        poster_url = details.get('poster') if details else None
+        
+        if poster_url and poster_url != "N/A":
+            try:
+                st.image(poster_url, use_container_width=True)
+            except Exception as e:
+                print(f"Error rendering poster for '{title}': {e}")
+                st.warning("Poster Not Available")
         else:
-            st.image("https://via.placeholder.com/300x450?text=No+Poster", use_container_width=True)
+            print(f"Missing or N/A poster for '{title}'")
+            st.warning("Poster Not Available")
         
         year = details['year'] if details else 'N/A'
         rating = details['rating'] if details else 'N/A'
@@ -223,10 +230,15 @@ with tab4:
         for i, title in enumerate(st.session_state.watchlist):
             with cols[i % 5]:
                 details = fetch_movie_details(title)
-                if details and details['poster'] != "N/A":
-                    st.image(details['poster'], use_container_width=True)
+                poster_url = details.get('poster') if details else None
+                if poster_url and poster_url != "N/A":
+                    try:
+                        st.image(poster_url, use_container_width=True)
+                    except Exception as e:
+                        print(f"Error rendering poster for '{title}' in Watchlist: {e}")
+                        st.warning("Poster Not Available")
                 else:
-                    st.image("https://via.placeholder.com/300x450?text=No+Poster", use_container_width=True)
+                    st.warning("Poster Not Available")
                 st.markdown(f"**{title}**")
                 if st.button("❌ Remove", key=f"rem_watch_{title}"):
                     remove_from_watchlist(title)
