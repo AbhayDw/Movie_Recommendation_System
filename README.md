@@ -21,6 +21,31 @@ https://movierecommendationsystem-kwdkndhzgdplqs3zhbwwri.streamlit.app/
 - ☁️ Live Deployment using Streamlit Cloud
 
 ---
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+![Home](screenshots/home.png)
+
+---
+
+### 🎬 Movie Recommendations
+
+![Recommendations](screenshots/recommendation.png)
+
+---
+
+### 😊 Mood-Based Recommendations
+
+![Mood](screenshots/mood.png)
+
+---
+
+### 📋 Watchlist Feature
+
+![Watchlist](screenshots/watchlist.png)
+
+
 
 ## 🛠️ Technologies Used
 
